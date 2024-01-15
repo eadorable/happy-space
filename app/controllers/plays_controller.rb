@@ -9,6 +9,7 @@ class PlaysController < ApplicationController
   end
 
   def show
+    @play = Play.find(params[:id])
   end
 
   def new
@@ -40,7 +41,8 @@ class PlaysController < ApplicationController
     # Set start_time to the current time if not provided
     @play.start_time ||= Time.now
 
-    if params[:play][:open_time] == '1'
+    # if params[:play][:open_time] == '1'
+    if @play.open_time == true
       # If open_time is selected, set number_of_hours and end_time to nil
       @play.number_of_hours = nil
       @play.end_time = nil
@@ -55,14 +57,6 @@ class PlaysController < ApplicationController
       render :new
     end
   end
-
-
-
-
-
-
-
-
 
   def edit
   end

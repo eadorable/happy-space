@@ -1,0 +1,28 @@
+
+<% total_time = (@play.end_time - @play.start_time)/(60*60) %>
+<% bill = @play.price * total_time %>
+
+<% start_time = @play.start_time.strftime("%l:%M %p")%>
+<% end_time = @play.end_time.strftime("%l:%M %p")%>
+
+<% current_time = Time.now.strftime("%l:%M %p") %>
+
+<div class="d-flex align-items-center justify-content-center vh-100">
+  <div class="card text-center m-3">
+    <div class="card-header">
+      <p class="m-0">Your billing statement</p>
+      <p>Control #: <%= @play.parent.control_number %></p>
+    </div>
+    <div class="card-body">
+      <h1 class="card-title">P<%= bill %></h1>
+      <hr>
+      <p class="card-text">Start Time: <%= start_time %></p>
+      <hr>
+      <p class="card-text">End Time: <%= end_time %></p>
+      <hr>
+      <p class="card-text text-success">Total Time: <%= total_time %> <%= total_time > 1 ? "Hours" : "Hour" %></p>
+      <hr>
+      <h3>Thank you for your patronage!</h3>
+    </div>
+  </div>
+</div>
