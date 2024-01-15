@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  parent: one
+  number_of_kids: 1
+  number_of_hours: 1
+  start_time: 2024-01-14 12:35:23
+  end_time: 2024-01-14 12:35:23
+  control_number: MyString
+  consent_agreed: false
+  open_time: false
+  price: 1.5
+
+two:
+  parent: two
+  number_of_kids: 1
+  number_of_hours: 1
+  start_time: 2024-01-14 12:35:23
+  end_time: 2024-01-14 12:35:23
+  control_number: MyString
+  consent_agreed: false
+  open_time: false
+  price: 1.5

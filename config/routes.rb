@@ -1,6 +1,14 @@
-Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+# config/routes.rb
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+Rails.application.routes.draw do
+  root to: 'parents#welcome'
+  resources :parents do
+    resources :plays do
+
+    end
+  end
+  get 'thank_you', to: 'parents#thank_you'
+  get 'welcome', to: 'parents#welcome'
+
+  # Other routes...
 end

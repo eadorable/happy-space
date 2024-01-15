@@ -1,0 +1,24 @@
+<!-- app/views/parents/index.html.erb -->
+
+<h1>Parents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @parents.each do |parent| %>
+      <tr>
+        <td><%= parent.name %></td>
+        <td>
+          <%= link_to 'Show', parent_path(parent), class: 'btn btn-info' %>
+          <%= link_to 'Edit', edit_parent_path(parent), class: 'btn btn-warning' %>
+          <%= link_to 'Destroy', parent_path(parent), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,16 @@
+<!-- app/views/plays/consent.html.erb -->
+
+<h1>Consent Form for Play</h1>
+
+<%= form_for @play, url: parent_plays_path(@parent), method: :post do |f| %>
+  <div class="field">
+    <%= f.label :consent_agreed do %>
+      <%= f.check_box :consent_agreed %>
+      I agree to the terms and conditions
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Agree and Create Play', class: 'btn btn-primary' %>
+  </div>
+<% end %>

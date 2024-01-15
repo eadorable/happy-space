@@ -74,3 +74,4 @@ end
 gem 'bootstrap', '~> 5.3.2'
 gem 'dartsass-sprockets'
 gem 'jquery-rails'
+gem "simple_form"

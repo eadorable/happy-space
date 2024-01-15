@@ -1,0 +1,52 @@
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="text-center">
+    <h2>PARENTAL CONSENT AND WAIVER AGREEMENT</h2>
+
+    <% if @parent.consent_agreed.nil? %>
+      <div class="consent-message">
+        <div class="border border-secondary">
+          <small>
+            I, the undersigned, hereby acknowledge and consent to my child's participation in activities organized and conducted by [Your Organization's Name]. I understand the nature of the activities and affirm that my child is in good health and capable of participating in such activities.
+
+            The activities may include, but are not limited to, [list specific activities, such as games, sports, outings, etc.]. I understand that these activities involve inherent risks, and I acknowledge that my child's participation is voluntary.
+
+            I hereby grant permission for my child to participate in the activities mentioned above. I understand that [Your Organization's Name] will take reasonable precautions to ensure my child's safety, and I release [Your Organization's Name] and its representatives from any liability in case of accidents or injuries that may occur during the activities.
+          </small>
+        </div>
+
+
+        <%= form_with(model: @parent, url: parents_path, method: :post, data: { disable_with: 'Processing...' }) do |f| %>
+
+          <div class="field mt-4">
+            <%= f.label :"Parent's Name" %>
+            <%= f.text_field :name %>
+          </div>
+
+          <div class="field mt-2">
+            <%= f.check_box :consent_agreed %>
+            <%= f.label :consent_agreed, 'I agree to the terms and conditions' %>
+          </div>
+
+          <div class="actions mt-2">
+            <%= f.submit 'Continue', class: 'btn btn-primary', onclick: 'return validateConsent()' %>
+            <%= link_to 'Cancel', new_parent_path, class: 'btn btn-secondary' %>
+          </div>
+
+        <% end %>
+      </div>
+    <% else %>
+      <!-- Render without partial -->
+      <%= render 'new', locals: { parent: @parent } %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  function validateConsent() {
+    if (!document.getElementById('parent_consent_agreed').checked) {
+      alert('You must agree to the terms and conditions to proceed.');
+      return false;
+    }
+    return true;
+  }
+</script>
