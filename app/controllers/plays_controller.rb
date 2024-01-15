@@ -16,15 +16,37 @@ class PlaysController < ApplicationController
     @play = Play.new
   end
 
+  # def create
+  #   @play = @parent.plays.new(play_params)
+
+  #   # Set start_time to the current time if not provided
+  #   @play.start_time ||= Time.now
+
+  #   # Calculate end_time based on start_time and number_of_hours
+  #   if @play.start_time.present? && @play.number_of_hours.present?
+  #     @play.end_time ||= @play.start_time + @play.number_of_hours.hours
+  #   end
+
+  #   if @play.save
+  #     redirect_to thank_you_path, notice: 'Play was successfully created.'
+  #   else
+  #     render :new
+  #   end
+  # end
+
   def create
     @play = @parent.plays.new(play_params)
 
     # Set start_time to the current time if not provided
     @play.start_time ||= Time.now
 
-    # Calculate end_time based on start_time and number_of_hours
-    if @play.start_time.present? && @play.number_of_hours.present?
-      @play.end_time ||= @play.start_time + @play.number_of_hours.hours
+    if params[:play][:open_time] == '1'
+      # If open_time is selected, set number_of_hours and end_time to nil
+      @play.number_of_hours = nil
+      @play.end_time = nil
+    else
+      # If open_time is not selected, set number_of_hours and calculate end_time
+      @play.end_time ||= @play.start_time + @play.number_of_hours.hours if @play.number_of_hours.present?
     end
 
     if @play.save
@@ -33,6 +55,13 @@ class PlaysController < ApplicationController
       render :new
     end
   end
+
+
+
+
+
+
+
 
 
   def edit
