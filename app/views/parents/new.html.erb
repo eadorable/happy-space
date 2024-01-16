@@ -18,8 +18,8 @@
         <%= form_with(model: @parent, url: parents_path, method: :post, data: { disable_with: 'Processing...' }) do |f| %>
 
           <div class="field mt-4">
-            <%= f.label :"Parent's Name" %>
-            <%= f.text_field :name %>
+            <%= f.label :"Parent's name", class: "m-1" %>
+            <%= f.text_field :name, required: true %>
           </div>
 
           <div class="field mt-2">
@@ -29,7 +29,7 @@
 
           <div class="actions mt-2">
             <%= f.submit 'Continue', class: 'btn btn-primary', onclick: 'return validateConsent()' %>
-            <%= link_to 'Cancel', new_parent_path, class: 'btn btn-secondary' %>
+            <%= link_to 'Cancel', welcome_path, class: 'btn btn-secondary' %>
           </div>
 
         <% end %>

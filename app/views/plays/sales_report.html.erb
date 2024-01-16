@@ -1,0 +1,10 @@
+<h1>I am sales report</h1>
+
+<p>Total Sales: P<%= @total_sales.round(2) %></p>
+<p>Sales of the day: P<%= @total_sales_today.round(2) %></p>
+<p>Total Kids: <%= @total_kids.round(2) %></p>
+<p>Total Hours: <%= @total_hours.round(2) %></p>
+
+<% @plays.each do |play| %>
+  <p><%= play.parent.control_number %></p>
+<% end %>
