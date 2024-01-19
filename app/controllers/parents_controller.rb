@@ -21,6 +21,7 @@ class ParentsController < ApplicationController
       redirect_to new_parent_play_path(@parent), notice: 'Parent was successfully created.'
     else
       redirect_to new_parent_path, alert: 'Error creating parent. Please try again.'
+
     end
   end
 

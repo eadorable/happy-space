@@ -1,5 +1,5 @@
-<div class="container d-flex align-items-center justify-content-center min-vh-100">
-  <div class="text-center">
+<div class="container d-flex align-items-center justify-content-center mt">
+  <div class="text-center col-md-8">
     <h2>PARENTAL CONSENT AND WAIVER AGREEMENT</h2>
 
     <% if @parent.consent_agreed.nil? %>
@@ -14,7 +14,6 @@
           </small>
         </div>
 
-
         <%= form_with(model: @parent, url: parents_path, method: :post, data: { disable_with: 'Processing...' }) do |f| %>
 
           <div class="field mt-4">
@@ -27,7 +26,7 @@
             <%= f.label :consent_agreed, 'I agree to the terms and conditions' %>
           </div>
 
-          <div class="actions mt-2">
+          <div class="actions m-3">
             <%= f.submit 'Continue', class: 'btn btn-primary', onclick: 'return validateConsent()' %>
             <%= link_to 'Cancel', welcome_path, class: 'btn btn-secondary' %>
           </div>

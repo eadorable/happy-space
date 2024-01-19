@@ -1,22 +1,11 @@
-
 <% current_time = Time.now.strftime("%l:%M %p") %>
 
 <% if @play.end_time.present? && @play.number_of_hours.present? %>
-
-  <% if ((@play.end_time - @play.start_time)/(60*60)) < 1 %>
-    <% total_time = 1 %>
-  <% else %>
-    <% total_time = ((@play.end_time - @play.start_time)/(60*60)).round(2) %>
-  <% end %>
-
-
+  <% total_time = ((@play.end_time - @play.start_time) / (60 * 60)).round(2) %>
   <% bill = (@play.price * total_time).round(2) %>
 
-  <% start_time = @play.start_time.strftime("%l:%M %p")%>
-  <% end_time = @play.end_time.strftime("%l:%M %p")%>
-
-  <div class="d-flex flex-wrap align-items-center justify-content-center vh-100">
-    <div class="card text-center "> <!-- Added mx-3 and my-3 for horizontal and vertical spacing -->
+  <div class="container d-flex flex-column align-items-center justify-content-start vh-100">
+    <div class="card text-center mx-3 my-3">
       <div class="card-header">
         <p class="m-0">Your billing statement</p>
         <p>Control #: <%= @play.parent.control_number %></p>
@@ -25,28 +14,41 @@
       <div class="card-body">
         <div class="card-title-container">
           <h1 class="card-title">P<%= bill %></h1>
-          <small class="text-muted"><%= @play.paid == true ? "Paid" : "Pending Payment" %></small>
+          <small class="text-muted"><%= @play.paid ? "Paid" : "Pending Payment" %></small>
         </div>
 
-        <hr>
-        <p class="card-text">Start Time: <%= start_time %></p>
-        <hr>
-        <p class="card-text">End Time: <%= end_time %></p>
-        <hr>
-        <p class="card-text text-success">Total Time: <%= total_time %> <%= total_time > 1 ? "Hours" : "Hour" %></p>
-        <hr>
+        <hr class="my-3">
+
+        <p class="card-text">Start Time: <%= @play.start_time.strftime("%l:%M %p") %></p>
+
+        <hr class="my-3">
+
+        <p class="card-text">End Time: <%= @play.end_time.strftime("%l:%M %p") %></p>
+
+        <hr class="my-3">
+
+        <p class="card-text text-success">Total Time: <%= "#{total_time} #{total_time > 1 ? 'Hours' : 'Hour'}" %></p>
+
+        <hr class="my-3">
+
         <h3>Thank you for your patronage!</h3>
       </div>
     </div>
+
+    <% if @play.paid == false %>
+      <%= form_with(model: @play, url: play_path(@play), method: :patch, html: { class: 'needs-validation' }) do |f| %>
+        <div class="d-grid gap-2 my-3">
+          <%= f.submit 'Pay Now', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 <% else %>
   <% total_time = 0 %>
   <% bill = 0 %>
-  <% start_time = @play.start_time.strftime("%l:%M %p")%>
-  <% end_time = "N/A"%>
 
-  <div class="d-flex flex-wrap align-items-center justify-content-center vh-100">
-    <div class="card text-center "> <!-- Added mx-3 and my-3 for horizontal and vertical spacing -->
+  <div class="container d-flex flex-column align-items-center justify-content-start vh-100">
+    <div class="card text-center mx-3 my-3">
       <div class="card-header">
         <p class="m-0">Your billing statement</p>
         <p>Control #: <%= @play.parent.control_number %></p>
@@ -54,30 +56,39 @@
       <div class="card-body">
         <div class="card-title-container">
           <h1 class="card-title">P<%= bill %></h1>
-          <small class="text-muted"><%= @play.paid == true ? "Paid" : "Pending Payment" %></small>
+          <small class="text-muted"><%= @play.paid ? "Paid" : "Pending Payment" %></small>
         </div>
-        <hr>
-        <p class="card-text">Start Time: <%= start_time %></p>
-        <hr>
-        <p class="card-text">End Time: <%= end_time %></p>
+
+        <hr class="my-3">
+
+        <p class="card-text">Start Time: <%= @play.start_time.strftime("%l:%M %p") %></p>
+
+        <hr class="my-3">
+
+        <p class="card-text">End Time: N/A</p>
+
         <%= form_with(model: @play, url: play_path(@play), method: :patch, html: { class: 'needs-validation' }) do |f| %>
-          <div class="d-grid gap-2 mb-5">
+          <div class="d-grid gap-2 my-3">
             <%= f.submit 'Update', class: 'btn btn-primary' %>
           </div>
         <% end %>
-        <hr>
-        <p class="card-text text-success">Total Time: <%= total_time %> <%= total_time > 1 ? "Hours" : "Hour" %></p>
-        <hr>
+
+        <hr class="my-3">
+
+        <p class="card-text text-success">Total Time: <%= "#{total_time} #{total_time > 1 ? 'Hours' : 'Hour'}" %></p>
+
+        <hr class="my-3">
+
         <h3>Thank you for your patronage!</h3>
       </div>
     </div>
-  </div>
-<% end %>
 
-<% if @play.paid == false %>
-  <%= form_with(model: @play, url: play_path(@play), method: :patch, html: { class: 'needs-validation' }) do |f| %>
-    <div class="d-grid gap-2 mb-5">
-      <%= f.submit 'Pay Now', class: 'btn btn-primary' %>
-    </div>
-  <% end %>
+    <% if @play.paid == false %>
+      <%= form_with(model: @play, url: play_path(@play), method: :patch, html: { class: 'needs-validation' }) do |f| %>
+        <div class="d-grid gap-2 my-3">
+          <%= f.submit 'Pay Now', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 <% end %>
