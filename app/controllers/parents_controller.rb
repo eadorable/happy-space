@@ -1,6 +1,7 @@
 # app/controllers/parents_controller.rb
 
 class ParentsController < ApplicationController
+  before_action :authenticate_user!, except: [:welcome]
   before_action :set_parent, only: [:show, :edit, :update, :destroy, :consent]
 
   def index

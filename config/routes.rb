@@ -1,6 +1,7 @@
 # config/routes.rb
 
 Rails.application.routes.draw do
+  devise_for :users
   root to: 'parents#welcome'
   resources :parents do
     resources :plays, only: [:new, :create, :destroy] do

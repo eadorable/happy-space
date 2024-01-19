@@ -76,3 +76,5 @@ gem 'dartsass-sprockets'
 gem 'jquery-rails'
 gem "simple_form"
 gem "font-awesome-sass"
+
+gem "devise", "~> 4.9"
