@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   get 'welcome', to: 'parents#welcome'
 
   get 'sales_report', to: 'plays#sales_report'
+  get 'play_monitoring', to: 'plays#play_monitoring'
+
+  resources :rates, only: [:index, :show, :new, :create, :edit, :update, :destroy]
 
   # Other routes...
 end

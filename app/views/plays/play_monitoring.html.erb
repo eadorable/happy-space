@@ -1,0 +1,72 @@
+<div class="container vh-100 d-flex flex-column align-items-center justify-content-center">
+  <h1 class="text-center mt-4 mb-4">Play Monitoring</h1>
+
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Control_number</th>
+          <th scope="col">Name</th>
+          <th scope="col">Start</th>
+          <th scope="col">End</th>
+          <th scope="col">Remaining Time</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @plays_today.empty? || @plays_today.nil? %>
+          <tr>
+            <td colspan="6" class="text-center">No record yet</td>
+          </tr>
+        <% else %>
+          <% @plays_today.each do |play| %>
+
+            <% if play.open_time == true %>
+              <% status = "Open" %>
+            <% else %>
+
+              <% remaining_time = ((play.end_time - Time.now)/1.minute).to_i %>
+              <% if remaining_time < 0 %>
+                <% status = "Already Ended" %>
+              <% elsif remaining_time < 5 %>
+                <% status = "Ending soon" %>
+              <% elsif remaining_time == 0 %>
+                <% status = "Ending now" %>
+              <% else %>
+                <% status = "" %>
+              <% end %>
+
+
+            <% end %>
+            <tr>
+              <td><%= link_to play.parent.control_number, play_path(play) %></td>
+              <td><%= play.parent.name %></td>
+              <td><%= play.start_time.strftime("%I:%M %p") %></td>
+
+              <% if play.end_time.nil? %>
+                <td>Open</td>
+              <% else %>
+                <td><%= play.end_time.strftime("%I:%M %p") %></td>
+              <% end %>
+
+              <% if play.end_time.nil? %>
+                <td>Open</td>
+              <% else %>
+                <% remaining_time = ((play.end_time - Time.now)/1.minute).to_i %>
+                <td><%= remaining_time %>min left</td>
+              <% end %>
+
+              <% if status == "Ending soon" || status == "Ending now" || status == "Already Ended" %>
+                <td class="text-danger"><h5><%= status %></h5></td>
+              <% else %>
+                <td><%= status %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <button data-controller="page-refresh" data-action="click->page-refresh#refresh" class="btn btn-primary mt-3">Update Status</button>
+</div>

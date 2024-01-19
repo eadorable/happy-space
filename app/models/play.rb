@@ -1,5 +1,6 @@
 class Play < ApplicationRecord
   belongs_to :parent
+  belongs_to :rate
 
   validates :price, presence: true
   validates :price, numericality: { greater_than: 0 }

@@ -1,0 +1,20 @@
+<div class="container d-flex align-items-center justify-content-center mt-5 min-vh-100">
+  <div class="text-center" >
+    <h1 class="mb-4">Play Rate</h1>
+
+
+    <%= form_with(model: @rate, html: { class: 'needs-validation' }) do |f| %>
+      <!-- Your form fields for creating a new play go here -->
+      <div class="mb-3">
+        <%= f.label :price, class: 'form-label' %>
+        <%= f.number_field :price, class: 'form-control' %>
+      </div>
+
+      <div class="d-grid gap-2">
+        <%= f.submit 'Save', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+
+
+  </div>
+</div>

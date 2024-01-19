@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_17_163241) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_19_143540) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,13 +29,22 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_163241) do
     t.datetime "start_time", precision: nil
     t.datetime "end_time", precision: nil
     t.boolean "open_time"
-    t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
     t.boolean "paid", default: false
+    t.bigint "rate_id", null: false
+    t.float "price"
     t.index ["parent_id"], name: "index_plays_on_parent_id"
+    t.index ["rate_id"], name: "index_plays_on_rate_id"
+  end
+
+  create_table "rates", force: :cascade do |t|
+    t.float "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "plays", "parents"
+  add_foreign_key "plays", "rates"
 end

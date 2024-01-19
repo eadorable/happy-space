@@ -60,6 +60,11 @@
         <p class="card-text">Start Time: <%= start_time %></p>
         <hr>
         <p class="card-text">End Time: <%= end_time %></p>
+        <%= form_with(model: @play, url: play_path(@play), method: :patch, html: { class: 'needs-validation' }) do |f| %>
+          <div class="d-grid gap-2 mb-5">
+            <%= f.submit 'Update', class: 'btn btn-primary' %>
+          </div>
+        <% end %>
         <hr>
         <p class="card-text text-success">Total Time: <%= total_time %> <%= total_time > 1 ? "Hours" : "Hour" %></p>
         <hr>
