@@ -9,7 +9,8 @@
       <!-- Your form fields for creating a new play go here -->
       <div class="mb-3">
         <%= f.label :price, class: 'form-label' %>
-        <%= f.number_field :price, class: 'form-control' %>
+        <%= f.number_field :price, value: @rate, class: 'form-control', required: true, disabled:true %>
+
       </div>
 
       <div class="mb-3">
@@ -17,17 +18,16 @@
         <%= f.number_field :number_of_kids, class: 'form-control', required: true %>
       </div>
 
-
-
       <div class="mb-3" id="duration-fields" data-num-of-hours-toggle-target='duration'>
         <%= f.label :'How many hours?', class: 'form-label' %>
-        <%= f.number_field :number_of_hours, class: 'form-control', required: @play.open_time == true  ? true : false %>
+        <%= f.number_field :number_of_hours, class: 'form-control', required: true, data: { num_of_hours_toggle_target: 'numberField' } %>
       </div>
 
       <div class="mb-3 sample">
         <%= f.check_box :open_time, class: 'form-check-input', id: 'play_open_time', data: { num_of_hours_toggle_target: 'openTimeCheckboxToggle', action: 'click->num-of-hours-toggle#toggle' } %>
         <%= f.label :open_time, class: 'form-check-label'%>
       </div>
+
 
 
       <div class="d-grid gap-2">

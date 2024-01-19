@@ -1,0 +1,38 @@
+<div class="container vh-100">
+  <h1 class="text-center mt-4 mb-4 ">Sales of the day</h1>
+
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Control_number</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% if @plays_today.empty? || @plays_today.nil? %>
+          <tr>
+            <td colspan="3" class="text-center">No sales yet</td>
+          </tr>
+        <% else %>
+          <% total_sales = 0 %>
+          <% @plays_today.each do |play| %>
+            <% if play.paid == true %>
+              <tr>
+                <td><%= link_to play.parent.control_number, play_path(play) %></td>
+                <td>P<%= (play.price * play.number_of_kids).round(2) %></td>
+
+              </tr>
+              <% total_sales += play.price * play.number_of_kids %>
+            <% end %>
+          <% end %>
+          <tr>
+            <td colspan="1" class="text-right"><strong>Total (Paid):</strong></td>
+            <td><strong>P<%= total_sales.round(2) %></strong></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

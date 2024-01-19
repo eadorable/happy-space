@@ -1,0 +1,40 @@
+<h1>Play Rate</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Create Date</th>
+      <th scope="col">Price</th>
+      <th scope="col">Action</th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+    <% if @rates.present? %>
+      <% @rates.each do |rate| %>
+        <tr>
+          <td><%= rate.created_at.strftime("%B %e, %Y %l:%M:%S %p") %></td>
+          <td>P<%= rate.price.round(2) %></td>
+          <td>
+
+            <%= link_to(edit_rate_path(rate), class: "btn btn-outline-secondary") do %>
+              <i class="fas fa-pen-to-square"></i>
+            <% end %>
+
+            <%= link_to(rate_path(rate), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger") do %>
+              <i class="fas fa-trash-alt"></i>
+            <% end %>
+
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="2">No rates found.</td>
+        <td colspan=""><%= link_to "Add rate", new_rate_path %></td>
+      </tr>
+    <% end %>
+
+  </tbody>
+</table>
