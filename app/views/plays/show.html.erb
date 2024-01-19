@@ -3,7 +3,12 @@
 
 <% if @play.end_time.present? && @play.number_of_hours.present? %>
 
-  <% total_time = 1 if ((@play.end_time - @play.start_time)/(60*60)).round(2) < 1 %>
+  <% if ((@play.end_time - @play.start_time)/(60*60)) < 1 %>
+    <% total_time = 1 %>
+  <% else %>
+    <% total_time = ((@play.end_time - @play.start_time)/(60*60)).round(2) %>
+  <% end %>
+
 
   <% bill = (@play.price * total_time).round(2) %>
 
@@ -15,9 +20,14 @@
       <div class="card-header">
         <p class="m-0">Your billing statement</p>
         <p>Control #: <%= @play.parent.control_number %></p>
+        <p>Name: <%= @play.parent.name %></p>
       </div>
       <div class="card-body">
-        <h1 class="card-title">P<%= bill %></h1>
+        <div class="card-title-container">
+          <h1 class="card-title">P<%= bill %></h1>
+          <small class="text-muted"><%= @play.paid == true ? "Paid" : "Pending Payment" %></small>
+        </div>
+
         <hr>
         <p class="card-text">Start Time: <%= start_time %></p>
         <hr>
@@ -42,16 +52,14 @@
         <p>Control #: <%= @play.parent.control_number %></p>
       </div>
       <div class="card-body">
-        <h1 class="card-title">P<%= bill %></h1>
+        <div class="card-title-container">
+          <h1 class="card-title">P<%= bill %></h1>
+          <small class="text-muted"><%= @play.paid == true ? "Paid" : "Pending Payment" %></small>
+        </div>
         <hr>
         <p class="card-text">Start Time: <%= start_time %></p>
         <hr>
         <p class="card-text">End Time: <%= end_time %></p>
-          <%= form_with(model: @play, url: play_path(@play), method: :patch, html: { class: 'needs-validation' }) do |f| %>
-            <div class="d-grid gap-2">
-              <%= f.submit 'Update', class: 'btn btn-primary' %>
-            </div>
-          <% end %>
         <hr>
         <p class="card-text text-success">Total Time: <%= total_time %> <%= total_time > 1 ? "Hours" : "Hour" %></p>
         <hr>
@@ -61,3 +69,10 @@
   </div>
 <% end %>
 
+<% if @play.paid == false %>
+  <%= form_with(model: @play, url: play_path(@play), method: :patch, html: { class: 'needs-validation' }) do |f| %>
+    <div class="d-grid gap-2 mb-5">
+      <%= f.submit 'Pay Now', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+<% end %>

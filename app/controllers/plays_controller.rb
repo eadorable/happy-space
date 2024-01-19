@@ -44,17 +44,42 @@ class PlaysController < ApplicationController
     @play = Play.find(params[:id])
   end
 
+  # def update
+  #   @play = Play.find(params[:id])
+
+  #   if @play.open_time == true
+  #     @play.end_time = Time.now
+  #     @play.number_of_hours = ((@play.end_time - @play.start_time) / 1.hour).round(2)
+  #     @play.paid = true
+  #   else
+  #     @play.paid = true
+  #   end
+  #   @play.save
+  #   if @play.update(play_params)
+  #     # redirect_to play_path(@play), notice: 'Play was successfully updated.'
+  #     redirect_to sales_report_path, notice: 'Play was successfully paid.'
+  #   else
+  #     render :edit
+  #   end
+  # end
   def update
     @play = Play.find(params[:id])
-    @play.end_time = Time.now
-    @play.number_of_hours = ((@play.end_time - @play.start_time) / 1.hour).round(2)
-    @play.save
-    if @play.update(play_params)
-      redirect_to play_path(@play), notice: 'Play was successfully updated.'
+
+    if @play.open_time
+      @play.end_time = Time.now
+      @play.number_of_hours = ((@play.end_time - @play.start_time) / 1.hour).round(2)
+    end
+
+    @play.paid = true  # Adjust this based on your logic
+
+    if @play.save
+      redirect_to sales_report_path, notice: 'Play was successfully paid.'
     else
       render :edit
     end
   end
+
+
 
   def destroy
     @play.destroy
@@ -63,11 +88,15 @@ class PlaysController < ApplicationController
 
   def sales_report
     @plays = Play.all
-    @total_sales = @plays.sum(:price)
-    @total_hours = @plays.sum(:number_of_hours)
-    @total_kids = @plays.sum(:number_of_kids)
+    # @total_sales = @plays.sum(:price)
+    # @total_hours = @plays.sum(:number_of_hours)
+    # @total_kids = @plays.sum(:number_of_kids)
 
+    @plays_today = @plays.where('created_at >= ?', Time.zone.now.beginning_of_day)
     @total_sales_today = @plays.where('created_at >= ?', Time.zone.now.beginning_of_day).sum(:price)
+    @total_hours_today = @plays.where('created_at >= ?', Time.zone.now.beginning_of_day).sum(:number_of_hours)
+    @total_kids_today = @plays.where('created_at >= ?', Time.zone.now.beginning_of_day).sum(:number_of_kids)
+
   end
 
   private
@@ -81,6 +110,6 @@ class PlaysController < ApplicationController
   end
 
   def play_params
-    params.require(:play).permit(:number_of_kids, :number_of_hours, :start_time, :end_time, :open_time, :price, :name, :parent_id)
+    params.require(:play).permit(:number_of_kids, :number_of_hours, :start_time, :end_time, :open_time, :price, :name, :parent_id, :paid)
   end
 end
