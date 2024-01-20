@@ -1,11 +1,14 @@
 <footer class="sticky-bottom">
-    <ul class="nav justify-content-around footer--bg">
-
+  <ul class="nav justify-content-around footer--bg">
     <li class="nav-item">
-      <%= link_to "Home", welcome_path, class: "nav-link a--color" %>
+      <%= link_to welcome_path, class: "nav-link a--color" do %>
+        <i class="fas fa-home"></i>
+      <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to "Back", :back, class: "nav-link a--color" %>
+      <%= link_to :back, class: "nav-link a--color" do %>
+        <i class="fas fa-arrow-left"></i>
+      <% end %>
     </li>
   </ul>
 </footer>
