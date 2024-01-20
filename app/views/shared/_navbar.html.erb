@@ -7,6 +7,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Use ms-lg-auto to align items to the right on larger screens -->
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ms-lg-auto">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "Logout", destroy_user_session_path, data: {turbo_method: :delete}, class: "nav-link" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+          </li>
+        <% end %>
         <li class="nav-item">
           <%= link_to "Play rate", rates_path, class: "nav-link text-dark" %>
         </li>

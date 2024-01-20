@@ -1,6 +1,7 @@
 # app/controllers/plays_controller.rb
 
 class PlaysController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_parent, only: [:new, :create, :consent_agreed]
   before_action :set_play, only: [:show, :edit, :update, :destroy]
 
