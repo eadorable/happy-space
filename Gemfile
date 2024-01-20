@@ -78,3 +78,5 @@ gem "simple_form"
 gem "font-awesome-sass"
 
 gem "devise", "~> 4.9"
+
+gem "dockerfile-rails", ">= 1.6", :group => :development

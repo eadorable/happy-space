@@ -16,11 +16,7 @@ class RatesController < ApplicationController
   def create
     @rate = Rate.new(rate_params)
     if @rate.save
-      if Rate.count > 1
-      redirect_to rates_path
-      else
-        redirect_to new_parent_play_path(Parent.last.id)
-      end
+      redirect_to welcome_path
     else
       render :new
     end
@@ -33,7 +29,7 @@ class RatesController < ApplicationController
   def update
     @rate = Rate.find(params[:id])
     if @rate.update(rate_params)
-      redirect_to rates_path
+      redirect_to welcome_path
     else
       render :edit
     end

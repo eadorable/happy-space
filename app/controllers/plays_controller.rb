@@ -18,7 +18,7 @@ class PlaysController < ApplicationController
     @play = Play.new
     # @play = @parent.plays.build
     if Rate.last.nil?
-      flash[:alert] = 'Please create a rate first.'
+      Parent.last.destroy
       redirect_to new_rate_path, notice: 'Please create a rate first.'
     else
       @rate = Rate.last.price
