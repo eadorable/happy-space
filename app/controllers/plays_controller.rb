@@ -25,14 +25,6 @@ class PlaysController < ApplicationController
     end
   end
 
-  # def new
-  #   @parent = Parent.find(params[:parent_id])
-  #   @play = @parent.plays.build
-  #   @play.build_rate # Build associated rate for the play
-  #   @rate = @play.rate # Access the associated rate
-  # end
-
-
 
   def create
     @play = @parent.plays.new(play_params)
@@ -62,24 +54,6 @@ class PlaysController < ApplicationController
     @play = Play.find(params[:id])
   end
 
-  # def update
-  #   @play = Play.find(params[:id])
-
-  #   if @play.open_time == true
-  #     @play.end_time = Time.now
-  #     @play.number_of_hours = ((@play.end_time - @play.start_time) / 1.hour).round(2)
-  #     @play.paid = true
-  #   else
-  #     @play.paid = true
-  #   end
-  #   @play.save
-  #   if @play.update(play_params)
-  #     # redirect_to play_path(@play), notice: 'Play was successfully updated.'
-  #     redirect_to sales_report_path, notice: 'Play was successfully paid.'
-  #   else
-  #     render :edit
-  #   end
-  # end
   def update
     @play = Play.find(params[:id])
 

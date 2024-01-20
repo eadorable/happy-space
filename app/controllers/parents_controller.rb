@@ -12,6 +12,9 @@ class ParentsController < ApplicationController
   end
 
   def new
+    if Rate.last.nil?
+      redirect_to new_rate_path, alert: 'Please create a rate before creating a parent.'
+    end
     @parent = Parent.new
   end
 
