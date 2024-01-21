@@ -1,4 +1,4 @@
-<div class="container d-flex align-items-start justify-content-center min-vh-100">
+<div class="container d-flex align-items-start justify-content-center min-vh-100" data-controller="auto-refresh">
   <div class="text-center">
     <h1 class="mt-4 mb-4">Play Monitoring</h1>
 
@@ -8,8 +8,7 @@
           <tr>
             <th scope="col">Control_number</th>
             <th scope="col">Name</th>
-            <%# <th scope="col">Start</th>
-            <th scope="col">End</th> %>
+
             <th scope="col">Remaining Time</th>
             <th scope="col">Status</th>
           </tr>
@@ -38,13 +37,6 @@
               <tr>
                 <td><%= link_to play.parent.control_number, play_path(play) %></td>
                 <td><%= play.parent.name %></td>
-
-                <%# <td><%= play.start_time.strftime("%I:%M %p") %></td>
-                <%# <% if play.end_time.nil? %>
-                  <%# <td>Open</td> %>
-                <%# <% else %>
-                  <%# <td><%= play.end_time.strftime("%I:%M %p") %></td>
-                <%# <% end %>
 
                 <% if play.end_time.nil? %>
                   <td>Open</td>
